@@ -23,8 +23,8 @@ class RealsenseDataset(GradSLAMDataset):
         stride: Optional[int] = None,
         start: Optional[int] = 0,
         end: Optional[int] = -1,
-        desired_height: Optional[int] = 480,
-        desired_width: Optional[int] = 640,
+        desired_height: Optional[int] = 720,
+        desired_width: Optional[int] = 1280,
         load_embeddings: Optional[bool] = False,
         embedding_dir: Optional[str] = "embeddings",
         embedding_dim: Optional[int] = 512,
@@ -33,6 +33,7 @@ class RealsenseDataset(GradSLAMDataset):
         self.input_folder = os.path.join(basedir, sequence)
         # only poses/images/depth corresponding to the realsense_camera_order are read/used
         self.pose_path = os.path.join(self.input_folder, "poses")
+        
         super().__init__(
             config_dict,
             stride=stride,
@@ -55,15 +56,20 @@ class RealsenseDataset(GradSLAMDataset):
         return color_paths, depth_paths, embedding_paths
 
     def load_poses(self):
-        posefiles = natsorted(glob.glob(os.path.join(self.pose_path, "*.npy")))
-        poses = []
+        # posefiles = natsorted(glob.glob(os.path.join(self.pose_path, "*.npy")))
+        # poses = []
+        # P = torch.tensor([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]).float()
+        # for posefile in posefiles:
+        #     c2w = torch.from_numpy(np.load(posefile)).float()
+        #     _R = c2w[:3, :3]
+        #     _t = c2w[:3, 3]
+        #     _pose = P @ c2w @ P.T
+        #     poses.append(_pose)
+        # return poses
+        poses=[]
         P = torch.tensor([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]).float()
-        for posefile in posefiles:
-            c2w = torch.from_numpy(np.load(posefile)).float()
-            _R = c2w[:3, :3]
-            _t = c2w[:3, 3]
-            _pose = P @ c2w @ P.T
-            poses.append(_pose)
+        for i in range(0, self.num):
+            poses.append(P)
         return poses
 
     def read_embedding_from_file(self, embedding_file_path):
