@@ -48,7 +48,7 @@ class RealsenseDataset(GradSLAMDataset):
         )
 
     def get_filepaths(self):
-        color_paths = natsorted(glob.glob(os.path.join(self.input_folder, "rgb", "*.jpg")))
+        color_paths = natsorted(glob.glob(os.path.join(self.input_folder, "rgb", "*.png")))
         depth_paths = natsorted(glob.glob(os.path.join(self.input_folder, "depth", "*.png")))
         embedding_paths = None
         if self.load_embeddings:
@@ -68,7 +68,7 @@ class RealsenseDataset(GradSLAMDataset):
         # return poses
         poses=[]
         P = torch.tensor([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]]).float()
-        for i in range(0, self.num):
+        for i in range(self.num_imgs):
             poses.append(P)
         return poses
 

@@ -150,10 +150,10 @@
 import os
 from os.path import join as p_join
 
-scenes = ["test"]
+scenes = ["test","test2"]
 primary_device="cuda:0"
 seed = 0
-scene_name = scenes[0]
+scene_name = scenes[1]
 
 map_every = 1
 keyframe_every = 5
@@ -174,14 +174,14 @@ config = dict(
     mapping_window_size=mapping_window_size, # Mapping window size
     report_global_progress_every=500, # Report Global Progress every nth frame
     eval_every=5, # Evaluate every nth frame (at end of SLAM)
-    scene_radius_depth_ratio=3, # Max First Frame Depth to Scene Radius Ratio (For Pruning/Densification)
+    scene_radius_depth_ratio=0.5, # Max First Frame Depth to Scene Radius Ratio (For Pruning/Densification)
     mean_sq_dist_method="projective", # ["projective", "knn"] (Type of Mean Squared Distance Calculation for Scale of Gaussians)
     report_iter_progress=False,
     load_checkpoint=False,
     checkpoint_time_idx=0,
     save_checkpoints=False, # Save Checkpoints
     checkpoint_interval=100, # Checkpoint Interval
-    use_wandb=False,
+    use_wandb=True,
     wandb=dict(
         entity="siyuan1098",
         project="SplaTAM",
@@ -191,7 +191,7 @@ config = dict(
         eval_save_qual=True,
     ),
     data=dict(
-        basedir="/root/data/realsense",
+        basedir="./data/realsense",
         gradslam_data_cfg="./configs/data/realsense.yaml",
         sequence=scene_name,
         desired_image_height=720,
