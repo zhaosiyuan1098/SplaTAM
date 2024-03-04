@@ -9,8 +9,8 @@ pipeline = rs.pipeline()
 
 # 创建一个配置并配置管道以从 RealSense 设备流式传输
 config = rs.config()
-config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
 
 # 开始流式传输
 pipeline.start(config)
@@ -34,8 +34,8 @@ try:
         color_image = np.asanyarray(color_frame.get_data())
 
         # 创建目录
-        rgb_dir = './data/realsense/test2/rgb'
-        depth_dir = './data/realsense/test2/depth'
+        rgb_dir = './data/realsense/test0sleep/rgb'
+        depth_dir = './data/realsense/test0sleep/depth'
         os.makedirs(rgb_dir, exist_ok=True)
         os.makedirs(depth_dir, exist_ok=True)
 
@@ -44,7 +44,7 @@ try:
         cv2.imwrite(os.path.join(depth_dir, f'{count}.png'), depth_image)
         print(count)
         # 每隔一秒保存一次
-        time.sleep(1)
+        time.sleep(0.0001)
         count += 1
 
 finally:

@@ -6,8 +6,8 @@ pipeline = rs.pipeline()
 
 # 创建一个配置并配置管道以从设备流式传输
 config = rs.config()
-config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
 
 # 开始流式传输
 pipeline.start(config)
@@ -42,3 +42,5 @@ params = {
 # 将参数写入YAML文件
 with open('./configs/data/realsense.yaml', 'w') as file:
     yaml.dump(params, file, default_flow_style=False)
+    
+print('Realsense camera parameters have been saved to realsense.yaml')

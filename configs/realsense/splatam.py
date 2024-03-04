@@ -150,10 +150,10 @@
 import os
 from os.path import join as p_join
 
-scenes = ["test","test2"]
+scenes = ["test","test2","test3","test4","test5","indoor60fps","indoor60fps2","indoor60fps4","indoor60fps5","indoor60fps6"]
 primary_device="cuda:0"
 seed = 0
-scene_name = scenes[1]
+scene_name = scenes[-1]
 
 map_every = 1
 keyframe_every = 5
@@ -194,8 +194,8 @@ config = dict(
         basedir="./data/realsense",
         gradslam_data_cfg="./configs/data/realsense.yaml",
         sequence=scene_name,
-        desired_image_height=720,
-        desired_image_width=1280,
+        desired_image_height=480,
+        desired_image_width=640,
         start=0,
         end=-1,
         stride=1,
